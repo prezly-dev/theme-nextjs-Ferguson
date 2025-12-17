@@ -17,10 +17,10 @@ $more-button-width: 84px;
 }
 
 .container {
-    @include container;
-
     display: flex;
     align-items: center;
+
+    @include container;
 }
 
 .link {
@@ -40,7 +40,7 @@ $more-button-width: 84px;
     }
 
     &:hover {
-        opacity: .8;
+        opacity: 0.8;
     }
 
     &:active {

@@ -22,7 +22,7 @@ const Schema = z.object({
 export type Environment = z.infer<typeof Schema>;
 
 export function environment(
-    requestHeaders: Headers = headers() as unknown as UnsafeUnwrappedHeaders,
+    requestHeaders: Headers = (headers() as unknown as UnsafeUnwrappedHeaders) as unknown as UnsafeUnwrappedHeaders,
 ): Environment {
     const httpEnvHeader = requestHeaders.get('X-Prezly-Env');
     const variables = Env.combine(process.env, httpEnvHeader);

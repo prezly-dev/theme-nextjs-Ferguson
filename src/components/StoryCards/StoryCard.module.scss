@@ -84,13 +84,13 @@
 }
 
 .subtitle {
-    @include ensure-max-text-height(3, 160%);
-
     margin: $spacing-2 0 0;
     font-size: 1rem;
     line-height: 160%;
     font-weight: $font-weight-regular;
     color: var(--prezly-text-color-secondary);
+
+    @include ensure-max-text-height(3, 160%);
 }
 
 .hero {

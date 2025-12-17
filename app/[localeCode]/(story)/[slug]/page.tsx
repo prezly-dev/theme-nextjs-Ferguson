@@ -30,7 +30,8 @@ async function resolve(params: Props['params']) {
     return { relatedStories, story };
 }
 
-export async function generateMetadata({ params }: Props) {
+export async function generateMetadata(props: Props) {
+    const params = await props.params;
     const { story } = await resolve(params);
 
     return generateStoryPageMetadata({ story });
@@ -38,7 +39,7 @@ export async function generateMetadata({ params }: Props) {
 
 export default async function StoryPage(props: Props) {
     const searchParams = await props.searchParams;
-    const { story, relatedStories } = await resolve(props.params);
+    const { story, relatedStories } = await resolve((await props.params));
     const settings = await app().themeSettings();
     const themeSettings = parsePreviewSearchParams(searchParams, settings);
 

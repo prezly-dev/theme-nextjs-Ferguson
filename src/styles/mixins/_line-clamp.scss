@@ -1,14 +1,16 @@
 /* This mixin only introduces clamping, for when the height of the block is controlled outside */
 @mixin line-clamp($lines) {
+    & {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
     @supports (-webkit-line-clamp: $lines) {
         display: -webkit-box;
         -webkit-box-orient: vertical;
         line-clamp: $lines;
         -webkit-line-clamp: $lines;
     }
-
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 /* This mixin ensures the height of a text block, based on the line-height and desired number of lines.

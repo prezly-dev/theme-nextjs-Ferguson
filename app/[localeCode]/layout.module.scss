@@ -5,8 +5,8 @@
 }
 
 .content {
-    @include container;
-
     padding-top: $spacing-8;
     padding-bottom: $spacing-9;
+
+    @include container;
 }

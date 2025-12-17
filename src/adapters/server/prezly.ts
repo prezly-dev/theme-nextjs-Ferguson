@@ -15,7 +15,7 @@ interface Config {
  * @internal Using this adapter directly is rarely needed. You should be good using `app()` in most of the cases.
  */
 export function initPrezlyClient(
-    requestHeaders: Headers = headers() as unknown as UnsafeUnwrappedHeaders,
+    requestHeaders: Headers = (headers() as unknown as UnsafeUnwrappedHeaders) as unknown as UnsafeUnwrappedHeaders,
     { cache = true }: Config = {},
 ) {
     const adapter = PrezlyAdapter.connect(
@@ -34,17 +34,17 @@ export function initPrezlyClient(
         {
             cache: cache
                 ? {
-                      memory: true,
-                      redis:
-                          !IS_EDGE_RUNTIME && process.env.REDIS_CACHE_URL
-                              ? { url: process.env.REDIS_CACHE_URL }
-                              : undefined,
-                      latestVersion: () =>
-                          Number.parseInt(
-                              requestHeaders.get('X-Newsroom-Cache-Version') ?? '0',
-                              10,
-                          ),
-                  }
+                    memory: true,
+                    redis:
+                        !IS_EDGE_RUNTIME && process.env.REDIS_CACHE_URL
+                            ? { url: process.env.REDIS_CACHE_URL }
+                            : undefined,
+                    latestVersion: () =>
+                        Number.parseInt(
+                            requestHeaders.get('X-Newsroom-Cache-Version') ?? '0',
+                            10,
+                        ),
+                }
                 : undefined,
         },
     );
