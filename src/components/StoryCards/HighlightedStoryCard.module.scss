@@ -28,7 +28,8 @@
 .overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(270deg, rgb(3 7 18 / 0%) 50%, rgb(3 7 18 / 40%) 100%), linear-gradient(180deg, rgb(3 7 18 / 0%) 40%, rgb(3 7 18 / 20%) 62%, rgb(3 7 18 / 70%) 100%);
+    background: linear-gradient(270deg, rgb(3 7 18 / 0%) 50%, rgb(3 7 18 / 40%) 100%),
+        linear-gradient(180deg, rgb(3 7 18 / 0%) 40%, rgb(3 7 18 / 20%) 62%, rgb(3 7 18 / 70%) 100%);
 }
 
 .image,
@@ -87,11 +88,11 @@
 }
 
 .title {
-    @include ensure-max-text-height(3, 140%);
-
     font-size: $font-size-xl;
     font-weight: $font-weight-bold;
     margin: 0;
+
+    @include ensure-max-text-height(3, 140%);
 
     &.expanded {
         @include ensure-max-text-height(4, 140%);
@@ -113,14 +114,14 @@
 }
 
 .subtitle {
-    @include ensure-max-text-height(3, 160%);
-
     margin: 0;
     margin-top: $spacing-2;
     color: var(--prezly-white);
     font-size: $font-size-s;
     font-weight: $font-weight-regular;
     line-height: 160%;
+
+    @include ensure-max-text-height(3, 160%);
 
     @include tablet-up {
         font-size: $font-size-m;

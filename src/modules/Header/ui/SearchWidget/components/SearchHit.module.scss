@@ -28,7 +28,10 @@
 .title {
     @include text-label;
     @include line-clamp(2);
-    @include search-result-title;
 
+    @include search-result-title;
+}
+
+.title {
     font-weight: $font-weight-semi-bold;
 }

@@ -1,13 +1,13 @@
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
-    enabled: process.env.ANALYZE === 'true',
+const withBundleAnalyzer = require("@next/bundle-analyzer")({
+    enabled: process.env.ANALYZE === "true",
 });
-const withThemeKitConfig = require('@prezly/theme-kit-nextjs/next-config').createNextConfig();
-const { withSentryConfig } = require('@sentry/nextjs');
-const path = require('path');
+const withThemeKitConfig = require("@prezly/theme-kit-nextjs/next-config").createNextConfig();
+const { withSentryConfig } = require("@sentry/nextjs");
+const path = require("path");
 
 const globalSassImports = `\
-    @import "src/styles/variables";
-    @import "src/styles/mixins";
+    @use "src/styles/variables" as *;
+    @use "src/styles/mixins" as *;
 `;
 
 const moduleExports = withBundleAnalyzer(
@@ -16,21 +16,21 @@ const moduleExports = withBundleAnalyzer(
             PREZLY_MODE: process.env.PREZLY_MODE,
         },
         images: {
-            loader: 'custom',
+            loader: "custom",
         },
         sassOptions: {
-            includePaths: [path.join(__dirname, 'src', 'styles')],
+            includePaths: [path.join(__dirname, "src", "styles")],
             prependData: globalSassImports,
         },
         webpack(config) {
             config.module.rules.push({
                 test: /\.svg$/,
-                use: ['@svgr/webpack'],
+                use: ["@svgr/webpack"],
             });
 
             return config;
         },
-    }),
+    })
 );
 
 const sentryWebpackPluginOptions = {
@@ -48,7 +48,7 @@ const SENTRY_DSN = process.env.SENTRY_DSN || process.env.NEXT_PUBLIC_SENTRY_DSN;
 
 // TODO: Remove `process.env.VERCEL !== '1'` part when Sentry/Vercel errors are fixed
 const IS_SENTRY_ENABLED =
-    process.env.NODE_ENV === 'production' && process.env.VERCEL !== '1' && SENTRY_DSN;
+    process.env.NODE_ENV === "production" && process.env.VERCEL !== "1" && SENTRY_DSN;
 
 // Make sure adding Sentry options is the last code to run before exporting, to
 // ensure that your source maps include changes from all other Webpack plugins

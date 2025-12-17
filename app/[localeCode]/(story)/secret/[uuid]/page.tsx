@@ -32,13 +32,13 @@ async function resolve(params: Props['params']) {
 }
 
 export async function generateMetadata(props: Props) {
-    const { story } = await resolve(props.params);
+    const { story } = await resolve((await props.params));
     return generateStoryPageMetadata({ story, isSecret: true });
 }
 
 export default async function SecretStoryPage(props: Props) {
     const searchParams = await props.searchParams;
-    const { story, relatedStories } = await resolve(props.params);
+    const { story, relatedStories } = await resolve((await props.params));
     const settings = await app().themeSettings();
     const themeSettings = parsePreviewSearchParams(searchParams, settings);
 

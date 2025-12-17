@@ -9,17 +9,17 @@
 }
 
 .thumbnailWrapper {
-    @include medium-card-aspect-ratio;
-
     position: relative;
     margin: 0 auto $spacing-4;
+
+    @include medium-card-aspect-ratio;
 }
 
 .thumbnail {
-    @include border-radius-s;
-
     object-fit: cover;
     border: 1px solid var(--prezly-border-color);
+
+    @include border-radius-s;
 }
 
 .title {

@@ -1,0 +1,2 @@
+/* https://tailwindcss.com/docs/upgrade-guide#using-a-prefix  */
+@import "tailwindcss" prefix(tw);

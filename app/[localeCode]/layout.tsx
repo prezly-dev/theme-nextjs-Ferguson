@@ -2,38 +2,28 @@ import { Locale, Newsrooms } from '@prezly/theme-kit-nextjs';
 import type { Viewport } from 'next';
 import type { ReactNode } from 'react';
 
-import { ThemeSettingsProvider } from '@/adapters/client';
 import { analytics, app, generateRootMetadata, themeSettings } from '@/adapters/server';
-import { CategoryImageFallbackProvider } from '@/components/CategoryImage';
 import { PreviewPageMask } from '@/components/PreviewPageMask';
 import { ScrollToTopButton } from '@/components/ScrollToTopButton';
 import { WindowScrollListener } from '@/components/WindowScrollListener';
-import { Analytics } from '@/modules/Analytics';
 import { Boilerplate } from '@/modules/Boilerplate';
-import {
-    BroadcastGalleryProvider,
-    BroadcastNotificationsProvider,
-    BroadcastPageTypesProvider,
-    BroadcastPreviewProvider,
-    BroadcastStoryProvider,
-    BroadcastTranslationsProvider,
-} from '@/modules/Broadcast';
-import { CookieConsentProvider } from '@/modules/CookieConsent';
 import { CookieConsent } from '@/modules/CookieConsent/CookieConsent';
 import { Footer } from '@/modules/Footer';
 import { Branding, Preconnect } from '@/modules/Head';
 import { Header } from '@/modules/Header';
-import { IntlProvider } from '@/modules/Intl';
 import { Notifications } from '@/modules/Notifications';
 import { PreviewBar } from '@/modules/PreviewBar';
-import { RoutingProvider } from '@/modules/Routing';
 import { SubscribeForm } from '@/modules/SubscribeForm';
 
+import '@/styles/index.css';
+import '@/styles/styles.globals.scss';
 import '@prezly/content-renderer-react-js/styles.css';
 import '@prezly/uploadcare-image/build/styles.css';
 import 'modern-normalize/modern-normalize.css';
-import '@/styles/styles.globals.scss';
 
+import GlobalHeader from '@/custom/globalHeader';
+import { GlobalAnalytics } from '@/modules/Analytics/Analytics';
+import { AppContext } from 'src/contexts/appContext';
 import styles from './layout.module.scss';
 
 interface Props {
@@ -45,7 +35,6 @@ interface Props {
 
 export async function generateViewport(): Promise<Viewport> {
     const settings = await themeSettings();
-
     return {
         themeColor: settings.header_background_color,
     };
@@ -54,9 +43,7 @@ export async function generateViewport(): Promise<Viewport> {
 export async function generateMetadata(props: Props) {
     const params = await props.params;
     const newsroom = await app().newsroom();
-
     const faviconUrl = Newsrooms.getFaviconUrl(newsroom, 180);
-
     return generateRootMetadata(
         {
             locale: params.localeCode,
@@ -89,25 +76,12 @@ export default async function MainLayout(props: Props) {
             </head>
             <body>
                 <AppContext localeCode={localeCode}>
-                    {isTrackingEnabled && (
-                        <Analytics
-                            meta={{
-                                newsroom: newsroom.uuid,
-                                tracking_policy: newsroom.tracking_policy,
-                            }}
-                            trackingPolicy={newsroom.tracking_policy}
-                            plausible={{
-                                isEnabled: newsroom.is_plausible_enabled,
-                                siteId: newsroom.plausible_site_id,
-                            }}
-                            segment={{ writeKey: newsroom.segment_analytics_id }}
-                            google={{ analyticsId: newsroom.google_analytics_id }}
-                        />
-                    )}
+                    {isTrackingEnabled && <GlobalAnalytics newsroom={newsroom} />}
                     <Notifications localeCode={localeCode} />
                     <PreviewBar newsroom={newsroom} />
                     <div className={styles.layout}>
                         <Header localeCode={localeCode} />
+                        <GlobalHeader />
                         <main className={styles.content}>{children}</main>
                         <SubscribeForm />
                         <Boilerplate localeCode={localeCode} />
@@ -120,43 +94,5 @@ export default async function MainLayout(props: Props) {
                 </AppContext>
             </body>
         </html>
-    );
-}
-
-async function AppContext(props: { children: ReactNode; localeCode: Locale.Code }) {
-    const { localeCode, children } = props;
-
-    const newsroom = await app().newsroom();
-    const languageSettings = await app().languageOrDefault(localeCode);
-    const brandName = languageSettings.company_information.name || newsroom.name;
-    const settings = await app().themeSettings();
-
-    return (
-        <RoutingProvider>
-            <IntlProvider localeCode={localeCode}>
-                <BroadcastStoryProvider>
-                    <BroadcastGalleryProvider>
-                        <CookieConsentProvider trackingPolicy={newsroom.tracking_policy}>
-                            <CategoryImageFallbackProvider
-                                image={newsroom.newsroom_logo}
-                                text={brandName}
-                            >
-                                <ThemeSettingsProvider settings={settings}>
-                                    <BroadcastPageTypesProvider>
-                                        <BroadcastNotificationsProvider>
-                                            <BroadcastTranslationsProvider>
-                                                <BroadcastPreviewProvider>
-                                                    {children}
-                                                </BroadcastPreviewProvider>
-                                            </BroadcastTranslationsProvider>
-                                        </BroadcastNotificationsProvider>
-                                    </BroadcastPageTypesProvider>
-                                </ThemeSettingsProvider>
-                            </CategoryImageFallbackProvider>
-                        </CookieConsentProvider>
-                    </BroadcastGalleryProvider>
-                </BroadcastStoryProvider>
-            </IntlProvider>
-        </RoutingProvider>
     );
 }

@@ -9,6 +9,7 @@ import { analytics } from '@/utils';
 
 import { useBroadcastedGallery, useBroadcastedStory } from '../Broadcast';
 
+import { Newsroom } from '@prezly/sdk';
 import type { Config } from './types';
 import { useAnalytics } from './useAnalytics';
 
@@ -33,4 +34,22 @@ export function Analytics(props: Config) {
     });
 
     return <Tracking analytics={analytics} />;
+}
+
+export function GlobalAnalytics({ newsroom }: { newsroom: Newsroom }) {
+    return (
+        <Analytics
+            meta={{
+                newsroom: newsroom.uuid,
+                tracking_policy: newsroom.tracking_policy,
+            }}
+            trackingPolicy={newsroom.tracking_policy}
+            plausible={{
+                isEnabled: newsroom.is_plausible_enabled,
+                siteId: newsroom.plausible_site_id,
+            }}
+            segment={{ writeKey: newsroom.segment_analytics_id }}
+            google={{ analyticsId: newsroom.google_analytics_id }}
+        />
+    );
 }
