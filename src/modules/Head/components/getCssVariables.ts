@@ -53,7 +53,7 @@ export function getCssVariables(settings: ThemeSettings): Record<string, string>
     const borderColorSecondary = tinycolor(text_color).setAlpha(0.3);
 
     return {
-        '--prezly-font-family': getFontFamily(font),
+        // '--prezly-font-family': getFontFamily(font),
         '--prezly-font-family-secondary': getSecondaryFontFamily(font),
         '--prezly-border-color': borderColor.toHex8String(),
         '--prezly-border-color-secondary': borderColorSecondary.toHex8String(),
