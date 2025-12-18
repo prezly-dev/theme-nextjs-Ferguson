@@ -1,7 +1,7 @@
-import classNames from 'classnames';
 import type { ReactNode } from 'react';
 
-import styles from './PageTitle.module.scss';
+import { Container } from '@/custom/components';
+import { cn } from '@/custom/fns';
 
 interface Props {
     title: string;
@@ -11,9 +11,17 @@ interface Props {
 
 export function PageTitle({ title, subtitle, className }: Props) {
     return (
-        <div className={classNames(styles.container, className)}>
-            <h1 className={styles.title}>{title}</h1>
-            {subtitle && <p className={styles.subtitle}>{subtitle}</p>}
-        </div>
+        <section
+            data-section="page-title"
+            className={cn(
+                'tw:relative tw:before:absolute tw:before:top-0 tw:before:h-[170px] tw:before:w-full tw:before:bg-[#01446A] tw:before:-z-1',
+                className,
+            )}
+        >
+            <Container className="tw:pb-6">
+                <h1 className="tw:text-2xl tw:font-bold! tw:text-white">{title}</h1>
+                {subtitle && <p className="tw:text-sm tw:text-white">{subtitle}</p>}
+            </Container>
+        </section>
     );
 }
