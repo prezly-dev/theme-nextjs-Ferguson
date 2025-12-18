@@ -20,10 +20,9 @@ export async function GlobalFooter(props: Props) {
 
     return (
         <footer className="tw:bg-[#01446A] tw:py-12 tw:text-white">
-            <Container>
+            <Container className="tw:py-0">
                 <div className="tw:flex tw:flex-col tw:gap-18.5">
                     <section className="tw:flex tw:justify-between">
-                        {/* col-1 */}
                         <div className="tw:max-w-154">
                             {/* <div className="tw:flex-1/3"> */}
                             <h4 className="title tw:uppercase tw:text-link tw:text-sm! tw:leading-4.25 tw:mb-4">
@@ -37,7 +36,6 @@ export async function GlobalFooter(props: Props) {
                                 />
                             )}
                         </div>
-                        {/* col-2 */}
                         <div>
                             <h4 className="title tw:uppercase tw:text-link tw:text-sm! tw:leading-4.25 tw:mb-4">
                                 follow us
@@ -78,7 +76,6 @@ export async function GlobalFooter(props: Props) {
                                 </ul>
                             </div>
                         </div>
-                        {/* col-3 */}
                         <div>
                             <h4 className="title tw:uppercase tw:text-link tw:text-sm! tw:leading-4.25 tw:mb-4">
                                 corporate information

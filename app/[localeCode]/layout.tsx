@@ -81,14 +81,7 @@ export default async function MainLayout(props: Props) {
                     <PreviewBar newsroom={newsroom} />
                     <div className="tw:flex tw:flex-col tw:min-h-screen">
                         <GlobalHeader localeCode={localeCode} />
-                        <main className="tw:opacity-0 tw:pointer-events-none">{children}</main>
-                        <div className="tw:opacity-0 tw:pointer-events-none">
-                            <SubscribeForm />
-                        </div>
-                        <div className="tw:opacity-0 tw:pointer-events-none">
-                            <Boilerplate localeCode={localeCode} />
-                            <Footer localeCode={localeCode} />
-                        </div>
+                        <main>{children}</main>
                         <GlobalFooter localeCode={localeCode} />
                     </div>
                     <ScrollToTopButton />

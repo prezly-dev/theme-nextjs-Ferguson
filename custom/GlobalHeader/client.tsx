@@ -17,7 +17,7 @@ interface Props {
 export default function GlobalHeader(props: Props) {
     return (
         <header>
-            <Container>
+            <Container className="tw:py-0">
                 <DesktopNav {...props} />
             </Container>
         </header>
