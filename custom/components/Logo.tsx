@@ -1,0 +1,94 @@
+import type { UploadedImage } from '@prezly/uploadcare';
+import UploadcareImage from '@uploadcare/nextjs-loader';
+
+import { useDevice } from '@/hooks';
+import { getUploadcareImage } from '@/utils';
+import { cn } from '../fns';
+
+enum LogoSize {
+    SMALL = 'small',
+    MEDIUM = 'medium',
+    LARGE = 'large',
+}
+
+interface Props {
+    alt: string;
+    image: UploadedImage;
+    size: string;
+}
+
+const REM = 16;
+
+export function Logo({ alt, image, size: preferredSize }: Props) {
+    const device = useDevice();
+    const uploadcareImage = getUploadcareImage(image);
+
+    if (!uploadcareImage) {
+        return null;
+    }
+
+    const { aspectRatio } = uploadcareImage;
+    const isLandscape = uploadcareImage.aspectRatio > 1;
+
+    let width: number | undefined;
+    let height: number | undefined;
+    let size = isSupportedLogoSize(preferredSize) ? preferredSize : LogoSize.MEDIUM;
+
+    // For mobile we want to override the logo size so it looks good
+    if (device.isMobile) {
+        size = isLandscape ? LogoSize.MEDIUM : LogoSize.SMALL;
+    }
+
+    if (aspectRatio > 1) {
+        // landscape
+        width = getWidth(size);
+        height = width / aspectRatio;
+    } else {
+        // portrait
+        height = getHeight(size);
+        width = height / aspectRatio;
+    }
+
+    return (
+        <UploadcareImage
+            src={uploadcareImage.cdnUrl}
+            alt={alt}
+            className={cn('tw:w-auto tw:h-auto tw:object-contain', {
+                'tw:max-w-20': isLandscape && size === 'small',
+                'tw:max-w-40': isLandscape && size === 'medium',
+                'tw:max-w-60': isLandscape && size === 'large',
+                'tw:max-h-14': !isLandscape && size === 'small',
+                'tw:max-h-6': !isLandscape && size === 'medium',
+                'tw:max-h-22': !isLandscape && size === 'large',
+            })}
+            width={width}
+            height={height}
+        />
+    );
+}
+
+function isSupportedLogoSize(size: string): size is LogoSize {
+    return size === 'small' || size === 'medium' || size === 'large';
+}
+
+function getWidth(size: LogoSize) {
+    switch (size) {
+        case LogoSize.LARGE:
+            return 15 * REM;
+        case LogoSize.MEDIUM:
+            return 10 * REM;
+        default:
+            return 5 * REM;
+    }
+}
+
+function getHeight(size: LogoSize) {
+    switch (size) {
+        case LogoSize.LARGE:
+            return 5.5 * REM;
+        case LogoSize.MEDIUM:
+            return 4.5 * REM;
+        default:
+            return 3.5 * REM;
+    }
+}

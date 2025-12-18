@@ -2,15 +2,15 @@ import { Locale, Newsrooms } from '@prezly/theme-kit-nextjs';
 import type { Viewport } from 'next';
 import type { ReactNode } from 'react';
 
-import { analytics, app, generateRootMetadata, themeSettings } from '@/adapters/server';
+import { analytics, generateRootMetadata, themeSettings } from '@/adapters/server';
 import { PreviewPageMask } from '@/components/PreviewPageMask';
 import { ScrollToTopButton } from '@/components/ScrollToTopButton';
 import { WindowScrollListener } from '@/components/WindowScrollListener';
+import { getNewsroom } from '@/custom/fns/server';
 import { Boilerplate } from '@/modules/Boilerplate';
 import { CookieConsent } from '@/modules/CookieConsent/CookieConsent';
 import { Footer } from '@/modules/Footer';
 import { Branding, Preconnect } from '@/modules/Head';
-import { Header } from '@/modules/Header';
 import { Notifications } from '@/modules/Notifications';
 import { PreviewBar } from '@/modules/PreviewBar';
 import { SubscribeForm } from '@/modules/SubscribeForm';
@@ -21,9 +21,10 @@ import '@prezly/content-renderer-react-js/styles.css';
 import '@prezly/uploadcare-image/build/styles.css';
 import 'modern-normalize/modern-normalize.css';
 
+import { GlobalFooter } from '@/custom/GlobalFooter';
+import { GlobalHeader } from '@/custom/GlobalHeader';
 import { GlobalAnalytics } from '@/modules/Analytics/Analytics';
 import { AppContext } from 'src/contexts/appContext';
-import styles from './layout.module.scss';
 
 interface Props {
     params: Promise<{
@@ -41,7 +42,7 @@ export async function generateViewport(): Promise<Viewport> {
 
 export async function generateMetadata(props: Props) {
     const params = await props.params;
-    const newsroom = await app().newsroom();
+    const newsroom = await getNewsroom();
     const faviconUrl = Newsrooms.getFaviconUrl(newsroom, 180);
     return generateRootMetadata(
         {
@@ -64,7 +65,7 @@ export default async function MainLayout(props: Props) {
 
     const { code: localeCode, isoCode, direction } = Locale.from(params.localeCode);
     const { isTrackingEnabled } = analytics();
-    const newsroom = await app().newsroom();
+    const newsroom = await getNewsroom();
 
     return (
         <html lang={isoCode} dir={direction}>
@@ -78,12 +79,17 @@ export default async function MainLayout(props: Props) {
                     {isTrackingEnabled && <GlobalAnalytics newsroom={newsroom} />}
                     <Notifications localeCode={localeCode} />
                     <PreviewBar newsroom={newsroom} />
-                    <div className={styles.layout}>
-                        <Header localeCode={localeCode} />
-                        <main className={styles.content}>{children}</main>
-                        <SubscribeForm />
-                        <Boilerplate localeCode={localeCode} />
-                        <Footer localeCode={localeCode} />
+                    <div className="tw:flex tw:flex-col tw:min-h-screen">
+                        <GlobalHeader localeCode={localeCode} />
+                        <main className="tw:opacity-0 tw:pointer-events-none">{children}</main>
+                        <div className="tw:opacity-0 tw:pointer-events-none">
+                            <SubscribeForm />
+                        </div>
+                        <div className="tw:opacity-0 tw:pointer-events-none">
+                            <Boilerplate localeCode={localeCode} />
+                            <Footer localeCode={localeCode} />
+                        </div>
+                        <GlobalFooter localeCode={localeCode} />
                     </div>
                     <ScrollToTopButton />
                     <CookieConsent localeCode={localeCode} />

@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import dynamic from 'next/dynamic';
 
 import { app, generatePageMetadata, routing } from '@/adapters/server';
+import { Container } from '@/custom/components';
 import { Contacts } from '@/modules/Contacts';
 import { FeaturedCategories } from '@/modules/FeaturedCategories';
 import { getStoryListPageSize, parseId, parsePreviewSearchParams } from '@/utils';
@@ -60,7 +61,7 @@ export default async function StoriesIndexPage(props: Props) {
     const themeSettings = parsePreviewSearchParams(searchParams, settings);
 
     return (
-        <>
+        <Container>
             {newsroom.is_hub ? (
                 <HubStories
                     layout={themeSettings.layout}
@@ -89,6 +90,6 @@ export default async function StoriesIndexPage(props: Props) {
                     localeCode={params.localeCode}
                 />
             )}
-        </>
+        </Container>
     );
 }
