@@ -61,35 +61,37 @@ export default async function StoriesIndexPage(props: Props) {
     const themeSettings = parsePreviewSearchParams(searchParams, settings);
 
     return (
-        <Container>
-            {newsroom.is_hub ? (
-                <HubStories
-                    layout={themeSettings.layout}
-                    localeCode={params.localeCode}
-                    pageSize={DEFAULT_PAGE_SIZE}
-                    showDate={themeSettings.show_date}
-                    showSubtitle={themeSettings.show_subtitle}
-                    storyCardVariant={themeSettings.story_card_variant}
-                />
-            ) : (
-                <Stories
-                    categoryId={parseId(searchParams.category)}
-                    fullWidthFeaturedStory={themeSettings.full_width_featured_story}
-                    layout={themeSettings.layout}
-                    localeCode={params.localeCode}
-                    pageSize={getStoryListPageSize(themeSettings.layout)}
-                    showDate={themeSettings.show_date}
-                    showSubtitle={themeSettings.show_subtitle}
-                    storyCardVariant={themeSettings.story_card_variant}
-                />
-            )}
+        <>
+            <Container>
+                {newsroom.is_hub ? (
+                    <HubStories
+                        layout={themeSettings.layout}
+                        localeCode={params.localeCode}
+                        pageSize={DEFAULT_PAGE_SIZE}
+                        showDate={themeSettings.show_date}
+                        showSubtitle={themeSettings.show_subtitle}
+                        storyCardVariant={themeSettings.story_card_variant}
+                    />
+                ) : (
+                    <Stories
+                        categoryId={parseId(searchParams.category)}
+                        fullWidthFeaturedStory={themeSettings.full_width_featured_story}
+                        layout={themeSettings.layout}
+                        localeCode={params.localeCode}
+                        pageSize={getStoryListPageSize(themeSettings.layout)}
+                        showDate={themeSettings.show_date}
+                        showSubtitle={themeSettings.show_subtitle}
+                        storyCardVariant={themeSettings.story_card_variant}
+                    />
+                )}
+                {themeSettings.show_featured_categories && (
+                    <FeaturedCategories
+                        accentColor={themeSettings.accent_color}
+                        localeCode={params.localeCode}
+                    />
+                )}
+            </Container>
             <Contacts localeCode={params.localeCode} />
-            {themeSettings.show_featured_categories && (
-                <FeaturedCategories
-                    accentColor={themeSettings.accent_color}
-                    localeCode={params.localeCode}
-                />
-            )}
-        </Container>
+        </>
     );
 }

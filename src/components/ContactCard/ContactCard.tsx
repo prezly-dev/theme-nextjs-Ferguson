@@ -40,32 +40,38 @@ export function ContactCard({
             <div className={styles.contentTitle}>
                 {renderAvatar({ className: styles.avatar })}
                 <div>
-                    <div className={styles.name}>{name}</div>
-                    {subtitle && <div className={styles.position}>{subtitle}</div>}
+                    <div className="tw:mb-2! tw:text-base! tw:text-black tw:whitespace-normal tw:leading-[19px]! tw:font-bold!">
+                        {name}
+                    </div>
+                    {subtitle && (
+                        <div className="tw:text-sm! tw:text-[#757777] tw:leading-[1.6]!">
+                            {subtitle}
+                        </div>
+                    )}
                 </div>
             </div>
             <div className={styles.links}>
                 <div className={styles.primaryContacts}>
                     {email && (
-                        <a href={`mailto:${email}`} className={styles.link}>
+                        <a href={`mailto:${email}`} className="tw:flex tw:items-center tw:text-sm">
                             <IconEmail aria-hidden className={styles.icon} />
                             <span className={styles.linkText}>{email}</span>
                         </a>
                     )}
                     {phone && (
-                        <a href={`tel:${phone}`} className={styles.link}>
+                        <a href={`tel:${phone}`} className="tw:flex tw:items-center tw:text-sm">
                             <IconPhone aria-hidden className={styles.icon} />
                             <span className={styles.linkText}>{phone}</span>
                         </a>
                     )}
                     {mobile && (
-                        <a href={`tel:${mobile}`} className={styles.link}>
+                        <a href={`tel:${mobile}`} className="tw:flex tw:items-center tw:text-sm">
                             <IconMobile aria-hidden className={styles.icon} />
                             <span className={styles.linkText}>{mobile}</span>
                         </a>
                     )}
                     {website && (
-                        <a href={website} className={styles.link}>
+                        <a href={website} className="tw:flex tw:items-center tw:text-sm">
                             <IconGlobe aria-hidden className={styles.icon} />
                             <span className={styles.linkText}>
                                 {website.replace(/(^\w+:|^)\/\//, '')}

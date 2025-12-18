@@ -11,27 +11,6 @@
     }
 }
 
-.name {
-    @include paragraph;
-
-    margin: 0 auto $spacing-half;
-    font-weight: $font-weight-semi-bold;
-    font-size: $font-size-l;
-
-    @include tablet-up {
-        margin-top: 0.25rem;
-    }
-}
-
-.position {
-    @include text-small;
-
-    margin: 0 auto $spacing-3;
-    color: var(--prezly-text-color-secondary);
-    font-weight: $font-weight-regular;
-    font-size: $font-size-labels;
-}
-
 .links {
     margin: $spacing-2 auto (-$spacing-2);
 }
@@ -44,24 +23,6 @@
         flex-wrap: wrap;
         margin-bottom: 0;
     }
-}
-
-.link {
-    @include text-small;
-    @include link-primary;
-
-    display: flex;
-    align-items: center;
-    margin-right: $spacing-4;
-    margin-bottom: $spacing-2;
-    overflow: hidden;
-}
-
-.linkText {
-    overflow: hidden;
-    overflow-wrap: break-word;
-    font-weight: $font-weight-semi-bold;
-    font-size: $font-size-labels;
 }
 
 .socials {
@@ -98,5 +59,4 @@
             margin-bottom: 0;
         }
     }
-
 }
