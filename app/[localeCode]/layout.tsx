@@ -21,7 +21,6 @@ import '@prezly/content-renderer-react-js/styles.css';
 import '@prezly/uploadcare-image/build/styles.css';
 import 'modern-normalize/modern-normalize.css';
 
-import GlobalHeader from '@/custom/globalHeader';
 import { GlobalAnalytics } from '@/modules/Analytics/Analytics';
 import { AppContext } from 'src/contexts/appContext';
 import styles from './layout.module.scss';
@@ -81,7 +80,6 @@ export default async function MainLayout(props: Props) {
                     <PreviewBar newsroom={newsroom} />
                     <div className={styles.layout}>
                         <Header localeCode={localeCode} />
-                        <GlobalHeader />
                         <main className={styles.content}>{children}</main>
                         <SubscribeForm />
                         <Boilerplate localeCode={localeCode} />
