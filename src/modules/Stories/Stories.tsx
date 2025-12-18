@@ -53,7 +53,6 @@ export async function Stories({
             showSubtitle={showSubtitle}
             storyCardVariant={storyCardVariant}
             total={pagination.matched_records_number}
-            withPageTitle
         />
     );
 }

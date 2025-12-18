@@ -1,8 +1,9 @@
-import { DEFAULT_PAGE_SIZE, type Locale } from '@prezly/theme-kit-nextjs';
+import { DEFAULT_PAGE_SIZE, translations, type Locale } from '@prezly/theme-kit-nextjs';
 import type { Metadata } from 'next';
 import dynamic from 'next/dynamic';
 
-import { app, generatePageMetadata, routing } from '@/adapters/server';
+import { app, generatePageMetadata, intl, routing } from '@/adapters/server';
+import { PageTitle } from '@/components/PageTitle';
 import { Container } from '@/custom/components';
 import { Contacts } from '@/modules/Contacts';
 import { FeaturedCategories } from '@/modules/FeaturedCategories';
@@ -59,38 +60,42 @@ export default async function StoriesIndexPage(props: Props) {
     const newsroom = await app().newsroom();
     const settings = await app().themeSettings();
     const themeSettings = parsePreviewSearchParams(searchParams, settings);
+    const { formatMessage } = await intl(params.localeCode);
 
     return (
         <>
-            <Container>
-                {newsroom.is_hub ? (
-                    <HubStories
-                        layout={themeSettings.layout}
-                        localeCode={params.localeCode}
-                        pageSize={DEFAULT_PAGE_SIZE}
-                        showDate={themeSettings.show_date}
-                        showSubtitle={themeSettings.show_subtitle}
-                        storyCardVariant={themeSettings.story_card_variant}
-                    />
-                ) : (
-                    <Stories
-                        categoryId={parseId(searchParams.category)}
-                        fullWidthFeaturedStory={themeSettings.full_width_featured_story}
-                        layout={themeSettings.layout}
-                        localeCode={params.localeCode}
-                        pageSize={getStoryListPageSize(themeSettings.layout)}
-                        showDate={themeSettings.show_date}
-                        showSubtitle={themeSettings.show_subtitle}
-                        storyCardVariant={themeSettings.story_card_variant}
-                    />
-                )}
-                {themeSettings.show_featured_categories && (
-                    <FeaturedCategories
-                        accentColor={themeSettings.accent_color}
-                        localeCode={params.localeCode}
-                    />
-                )}
-            </Container>
+            <section data-section="stories">
+                <PageTitle title={formatMessage(translations.homepage.latestStories)} />
+                <Container className="tw:pt-0">
+                    {newsroom.is_hub ? (
+                        <HubStories
+                            layout={themeSettings.layout}
+                            localeCode={params.localeCode}
+                            pageSize={DEFAULT_PAGE_SIZE}
+                            showDate={themeSettings.show_date}
+                            showSubtitle={themeSettings.show_subtitle}
+                            storyCardVariant={themeSettings.story_card_variant}
+                        />
+                    ) : (
+                        <Stories
+                            categoryId={parseId(searchParams.category)}
+                            fullWidthFeaturedStory={themeSettings.full_width_featured_story}
+                            layout={themeSettings.layout}
+                            localeCode={params.localeCode}
+                            pageSize={getStoryListPageSize(themeSettings.layout)}
+                            showDate={themeSettings.show_date}
+                            showSubtitle={themeSettings.show_subtitle}
+                            storyCardVariant={themeSettings.story_card_variant}
+                        />
+                    )}
+                    {themeSettings.show_featured_categories && (
+                        <FeaturedCategories
+                            accentColor={themeSettings.accent_color}
+                            localeCode={params.localeCode}
+                        />
+                    )}
+                </Container>
+            </section>
             <Contacts localeCode={params.localeCode} />
         </>
     );

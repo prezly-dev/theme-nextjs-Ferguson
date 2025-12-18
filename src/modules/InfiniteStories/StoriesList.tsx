@@ -7,7 +7,6 @@ import classNames from 'classnames';
 import { useMemo } from 'react';
 
 import { FormattedMessage, useLocale } from '@/adapters/client';
-import { PageTitle } from '@/components/PageTitle';
 import { StaggeredLayout } from '@/components/StaggeredLayout';
 import { HighlightedStoryCard, PlaceholderStoryCard, StoryCard } from '@/components/StoryCards';
 import type { ThemeSettings } from '@/theme-settings';
@@ -35,7 +34,6 @@ type Props = {
     stories: ListStory[];
     storyCardVariant: ThemeSettings['story_card_variant'];
     withEmptyState?: boolean;
-    withPageTitle?: boolean;
 };
 
 const PLACEHOLDER_STORIES = [
@@ -73,10 +71,8 @@ export function StoriesList({
     stories,
     storyCardVariant,
     withEmptyState = true,
-    withPageTitle,
 }: Props) {
     const locale = useLocale();
-    const { formatMessage } = useIntl();
     const hasCategories = categories.length > 0;
     const hasStories = stories.length > 0;
     const isPreview = isPreviewActive();
@@ -178,16 +174,6 @@ export function StoriesList({
                         );
                     })}
                 </div>
-            )}
-            {withPageTitle && (
-                <PageTitle
-                    className={classNames(styles.pageTitle, {
-                        // We want to hide the page title for regular users, but keep it
-                        // for the screen readers.
-                        [styles.aria]: isCategoryList ? !hasStories : !hasCategories,
-                    })}
-                    title={formatMessage(translations.homepage.latestStories)}
-                />
             )}
             {hasCategories && (
                 <CategoriesFilters
