@@ -40,7 +40,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 
 const Stories = dynamic(
     async () => {
-        const component = await import('@/modules/Stories');
+        const component = await import('@/custom/Stories/Stories');
         return { default: component.Stories };
     },
     { ssr: true },
@@ -64,8 +64,8 @@ export default async function StoriesIndexPage(props: Props) {
 
     return (
         <>
+            <PageTitle title={formatMessage(translations.homepage.latestStories)} />
             <section data-section="stories">
-                <PageTitle title={formatMessage(translations.homepage.latestStories)} />
                 <Container className="tw:pt-0">
                     {newsroom.is_hub ? (
                         <HubStories

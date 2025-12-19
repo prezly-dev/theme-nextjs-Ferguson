@@ -136,6 +136,7 @@ export async function GlobalFooter(props: Props) {
                                 },
                             ].map((item) => (
                                 <a
+                                    key={item.label}
                                     href={item.href}
                                     className="tw:first-of-type:border-l-0"
                                     target="_blank"
