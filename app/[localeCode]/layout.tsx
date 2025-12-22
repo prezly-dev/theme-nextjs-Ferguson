@@ -7,13 +7,10 @@ import { PreviewPageMask } from '@/components/PreviewPageMask';
 import { ScrollToTopButton } from '@/components/ScrollToTopButton';
 import { WindowScrollListener } from '@/components/WindowScrollListener';
 import { getNewsroom } from '@/custom/fns/server';
-import { Boilerplate } from '@/modules/Boilerplate';
 import { CookieConsent } from '@/modules/CookieConsent/CookieConsent';
-import { Footer } from '@/modules/Footer';
 import { Branding, Preconnect } from '@/modules/Head';
 import { Notifications } from '@/modules/Notifications';
 import { PreviewBar } from '@/modules/PreviewBar';
-import { SubscribeForm } from '@/modules/SubscribeForm';
 
 import '@/styles/index.css';
 import '@/styles/styles.globals.scss';
@@ -23,8 +20,10 @@ import 'modern-normalize/modern-normalize.css';
 
 import { GlobalFooter } from '@/custom/GlobalFooter';
 import { GlobalHeader } from '@/custom/GlobalHeader';
+import { GlobalMediaResources } from '@/custom/GlobalMediaResources';
 import { GlobalAnalytics } from '@/modules/Analytics/Analytics';
 import { AppContext } from 'src/contexts/appContext';
+import { Contacts } from '@/modules/Contacts';
 
 interface Props {
     params: Promise<{
@@ -82,6 +81,8 @@ export default async function MainLayout(props: Props) {
                     <div className="tw:flex tw:flex-col tw:min-h-screen">
                         <GlobalHeader localeCode={localeCode} />
                         <main>{children}</main>
+                        <GlobalMediaResources />
+                        <Contacts localeCode={localeCode} />
                         <GlobalFooter localeCode={localeCode} />
                     </div>
                     <ScrollToTopButton />
