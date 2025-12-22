@@ -18,16 +18,7 @@ interface Props {
 }
 
 export async function Stories(props: Props) {
-    const {
-        categoryId,
-        fullWidthFeaturedStory,
-        layout,
-        localeCode,
-        pageSize,
-        showDate,
-        showSubtitle,
-        storyCardVariant,
-    } = props;
+    const { categoryId, layout, localeCode, pageSize, showDate, showSubtitle } = props;
 
     const newsroom = await getNewsroom();
     const languageSettings = await getLanguage(localeCode);

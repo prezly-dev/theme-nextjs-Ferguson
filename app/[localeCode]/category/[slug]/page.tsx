@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation';
 
 import { app, generateCategoryPageMetadata, routing } from '@/adapters/server';
 import { BroadcastTranslations } from '@/modules/Broadcast';
-import { Category as CategoryIndex } from '@/modules/Category';
+import { Category as CategoryIndex } from '@/custom/Category/Category';
 import { getStoryListPageSize, parsePreviewSearchParams } from '@/utils';
 
 interface Props {
@@ -28,14 +28,14 @@ async function resolve(params: Props['params']) {
 }
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
-    const { localeCode, category } = await resolve((await props.params));
+    const { localeCode, category } = await resolve(await props.params);
 
     return generateCategoryPageMetadata({ locale: localeCode, category });
 }
 
 export default async function CategoryPage(props: Props) {
     const searchParams = await props.searchParams;
-    const { category, translatedCategory } = await resolve((await props.params));
+    const { category, translatedCategory } = await resolve(await props.params);
     const themeSettings = await app().themeSettings();
     const settings = parsePreviewSearchParams(searchParams, themeSettings);
 
@@ -48,7 +48,6 @@ export default async function CategoryPage(props: Props) {
                 pageSize={getStoryListPageSize(settings.layout)}
                 showDate={settings.show_date}
                 showSubtitle={settings.show_subtitle}
-                storyCardVariant={settings.story_card_variant}
                 translatedCategory={translatedCategory}
             />
         </>
