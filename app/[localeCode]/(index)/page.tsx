@@ -5,7 +5,6 @@ import dynamic from 'next/dynamic';
 import { app, generatePageMetadata, intl, routing } from '@/adapters/server';
 import { PageTitle } from '@/components/PageTitle';
 import { Container } from '@/custom/components';
-import { Contacts } from '@/modules/Contacts';
 import { FeaturedCategories } from '@/modules/FeaturedCategories';
 import { getStoryListPageSize, parseId, parsePreviewSearchParams } from '@/utils';
 
@@ -96,7 +95,6 @@ export default async function StoriesIndexPage(props: Props) {
                     )}
                 </Container>
             </section>
-            <Contacts localeCode={params.localeCode} />
         </>
     );
 }

@@ -3,7 +3,6 @@
 import type { NewsroomContact } from '@prezly/sdk';
 import { translations } from '@prezly/theme-kit-nextjs';
 import UploadcareImage from '@uploadcare/nextjs-loader';
-import classNames from 'classnames';
 
 import { FormattedMessage, useLocale } from '@/adapters/client';
 import { ContactCard } from '@/components/ContactCard';
@@ -12,7 +11,6 @@ import { getUploadcareImage } from '@/utils';
 
 import { getNumberOfColumns } from '../lib';
 
-import styles from './Contacts.module.scss';
 import { Container } from '@/custom/components';
 import Link from 'next/link';
 
