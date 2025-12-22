@@ -24,6 +24,7 @@ import { GlobalMediaResources } from '@/custom/GlobalMediaResources';
 import { GlobalAnalytics } from '@/modules/Analytics/Analytics';
 import { AppContext } from 'src/contexts/appContext';
 import { Contacts } from '@/modules/Contacts';
+import { GlobalNewsletter } from '@/custom/GlobalNewsletter';
 
 interface Props {
     params: Promise<{
@@ -81,6 +82,7 @@ export default async function MainLayout(props: Props) {
                     <div className="tw:flex tw:flex-col tw:min-h-screen">
                         <GlobalHeader localeCode={localeCode} />
                         <main>{children}</main>
+                        <GlobalNewsletter />
                         <GlobalMediaResources />
                         <Contacts localeCode={localeCode} />
                         <GlobalFooter localeCode={localeCode} />
