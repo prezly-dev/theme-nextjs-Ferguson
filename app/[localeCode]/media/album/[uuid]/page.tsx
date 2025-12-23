@@ -24,12 +24,12 @@ async function resolve(params: Props['params']) {
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
     const params = await props.params;
-    const { gallery } = await resolve(await props.params);
+    const { gallery } = await resolve(props.params);
     return generateMediaGalleryPageMetadata({ locale: params.localeCode, gallery });
 }
 
 export default async function AlbumPage(props: Props) {
-    const { gallery } = await resolve(await props.params);
+    const { gallery } = await resolve(props.params);
 
     return (
         <>

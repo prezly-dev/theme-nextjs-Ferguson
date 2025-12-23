@@ -28,14 +28,14 @@ async function resolve(params: Props['params']) {
 }
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
-    const { localeCode, category } = await resolve(await props.params);
+    const { localeCode, category } = await resolve(props.params);
 
     return generateCategoryPageMetadata({ locale: localeCode, category });
 }
 
 export default async function CategoryPage(props: Props) {
     const searchParams = await props.searchParams;
-    const { category, translatedCategory } = await resolve(await props.params);
+    const { category, translatedCategory } = await resolve(props.params);
     const themeSettings = await app().themeSettings();
     const settings = parsePreviewSearchParams(searchParams, themeSettings);
 
