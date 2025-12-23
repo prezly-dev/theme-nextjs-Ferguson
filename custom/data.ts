@@ -25,11 +25,11 @@ export const navItems = [
     },
     {
         title: 'Gallery',
-        href: 'https://www.fergusonpressroom.com/media',
+        href: '/media',
     },
     {
         title: 'Search',
-        href: 'https://www.fergusonpressroom.com/search',
+        href: '/search',
     },
 ];
 
