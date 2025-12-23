@@ -28,7 +28,6 @@ function DesktopNav(props: Props) {
     return (
         <div className="tw:flex tw:items-center tw:justify-between tw:py-4.5">
             <NewsRoomLogo
-                localeCode={props.localeCode}
                 newsroom={props.newsroom}
                 companyInformation={props.companyInformation}
                 logoSize={props.logoSize}
