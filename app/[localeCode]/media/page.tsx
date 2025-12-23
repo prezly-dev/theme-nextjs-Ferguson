@@ -5,7 +5,7 @@ import { redirect } from 'next/navigation';
 
 import { app, generateMediaPageMetadata, intl, routing } from '@/adapters/server';
 import { BroadcastTranslations } from '@/modules/Broadcast';
-import { Galleries } from '@/modules/Galleries';
+import { Galleries } from '@/custom/Galleries';
 
 interface Props {
     params: Promise<{
@@ -28,7 +28,6 @@ export default async function MediaPage(props: Props) {
     const { galleries, pagination } = await app().galleries({
         limit: DEFAULT_GALLERY_PAGE_SIZE,
     });
-    const newsroom = await app().newsroom();
 
     // Redirect to the gallery immediately if it's the only one
     if (galleries.length === 1) {
@@ -48,7 +47,6 @@ export default async function MediaPage(props: Props) {
                 localeCode={localeCode}
                 pageSize={DEFAULT_GALLERY_PAGE_SIZE}
                 total={pagination.total_records_number}
-                newsroomUuid={newsroom.uuid}
             />
         </>
     );
