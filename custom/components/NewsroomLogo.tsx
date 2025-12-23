@@ -1,9 +1,7 @@
 'use client';
 
-import { Link } from '@/components/Link';
 import { isPreviewActive } from '@/utils';
 import type { Newsroom, NewsroomCompanyInformation } from '@prezly/sdk';
-import type { Locale } from '@prezly/theme-kit-nextjs/index';
 import type { UploadedImage } from '@prezly/uploadcare';
 import { useSearchParams } from 'next/navigation';
 import { useMemo } from 'react';
@@ -11,14 +9,13 @@ import { Logo } from './Logo';
 import { cn } from '../fns';
 
 interface Props {
-    localeCode: Locale.Code;
     newsroom: Newsroom;
     companyInformation: NewsroomCompanyInformation;
     logoSize: string;
 }
 
 export function NewsRoomLogo(props: Props) {
-    const { localeCode, newsroom, companyInformation, logoSize: defaultLogoSize } = props;
+    const { newsroom, companyInformation, logoSize: defaultLogoSize } = props;
 
     const isPreviewMode = process.env.PREZLY_MODE === 'preview';
     const searchParams = useSearchParams();
@@ -50,8 +47,8 @@ export function NewsRoomLogo(props: Props) {
     const newsroomName = companyInformation.name || newsroom.display_name;
 
     return (
-        <Link
-            href={{ routeName: 'index', params: { localeCode } }}
+        <a
+            href="https://www.corporate.ferguson.com/home/default.aspx"
             className={cn('tw:flex', !logo && 'tw:text-red-700')}
         >
             {!logo && (
@@ -60,6 +57,6 @@ export function NewsRoomLogo(props: Props) {
                 </div>
             )}
             {logo && <Logo alt={newsroomName} image={logo} size={logoSize} />}
-        </Link>
+        </a>
     );
 }
